@@ -12,6 +12,11 @@ on:
           - ubuntu-latest
           - macos-latest
           - windows-latest
+      static:
+        description: 'Static Binaries (only for Linux)'
+        type: boolean
+        required: true
+        default: false
 
 jobs:
   Build:
@@ -29,6 +34,7 @@ jobs:
           components: 'native-image'
           cache: 'maven'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-musl: ${{ inputs.static }}
 
       - name: 'Build & Test'
         run: ./mvnw package -Pnative
